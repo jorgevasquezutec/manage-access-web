@@ -4,8 +4,8 @@ import '@/styles/globals.css'
 
 
 export const metadata = {
-    title: 'My App | Home',
-    description: 'Welcome to the My App',
+    title: 'Manage Access | Home',
+    description: 'Welcome to Manage Access',
   }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

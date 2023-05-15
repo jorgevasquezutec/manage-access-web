@@ -69,7 +69,7 @@ export default function AddUser() {
         const uuid = Math.random().toString(36).substring(2) + Date.now().toString(36);
         const img = await fetch(photo).then(res => res.blob())
         const file = new File([img], `${uuid}.jpg`, { type: 'image/jpeg' })
-        console.log(file)
+        // console.log(file)
         const formData = new FormData()
         formData.append('file', file)
         formData.append('user_id', uuid)
