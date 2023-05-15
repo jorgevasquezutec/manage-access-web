@@ -1,0 +1,38 @@
+version: '3'
+services:
+  #MySQL
+  db:
+    image: mysql:8
+    container_name: my-app
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: my-app
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - my-app-network
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - my-app-network
+    depends_on:
+      - db
+
+#Redes
+networks:
+  my-app-network:
+    driver: bridge
+#Volumenes
+volumes:
+  my-app:
+    driver: local
