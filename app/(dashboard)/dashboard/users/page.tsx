@@ -9,7 +9,7 @@ import * as React from "react"
 async function getData(): Promise<Customer[]> {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/customers`, {
-        cache: 'no-store',
+        next: { revalidate: 10 },
     })
 
     if (!res.ok) throw new Error('Something went wrong')
@@ -20,15 +20,7 @@ async function getData(): Promise<Customer[]> {
 
 
 export default async function Users() {
-    const [data,setData]= React.useState([] as Customer[])
-
-    React.useEffect(() => {
-        getData().then((data) => {
-            setData(data)
-            // console.log(data)
-        })
-        
-    }, [])
+    const data = await getData();
    
     return (
         <div>

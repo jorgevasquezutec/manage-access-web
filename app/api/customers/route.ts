@@ -2,9 +2,16 @@
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import fs from "fs"
-import formidable from "formidable"
+import { NextRequest, NextResponse } from "next/server";
+import * as z from "zod"
 
+
+const postCustomerSchema = z.object({
+    uuid: z.string().min(1,'uuid is required'),
+    name: z.string().min(1,'Nombre es requerido'),
+    email: z.string().email('Correo invalido').min(1,'Correo es requerido'),
+    photo_url : z.string().min(1,'Foto es requerida'),
+  })
 
 
 export async function GET(req: Request) {
@@ -23,24 +30,26 @@ export async function GET(req: Request) {
     }
 }
 
-export async function POST(req: Request){
+
+export async function POST(req: NextRequest){
     try{
-        const form = new formidable.IncomingForm()
-        console.log(form)
-        form.parse(req, async (err, fields, files) => {
-            await saveFile(files.file)
-            return new Response(JSON.stringify({ message: "File uploaded" }), { status: 200 })
+
+        const json = await req.json()
+        const body = postCustomerSchema.parse(json)
+
+        const customer = await db.customer.create({
+            data: {
+                uuid: body.uuid,
+                name: body.name,
+                email: body.email,
+                photo_url: body.photo_url
+            }
         })
+    
+        return new Response(JSON.stringify(customer), { status: 200 })
 
     }catch(error){
         console.log(error)
         return new Response(null, { status: 500 })
     }
-}
-
-const saveFile = async (file: formidable.File) => {
-    const data = fs.readFileSync(file.path)
-    fs.writeFileSync(`./public/images/${file.name}`, data)
-    await fs.unlinkSync(file.path)
-    return;
 }

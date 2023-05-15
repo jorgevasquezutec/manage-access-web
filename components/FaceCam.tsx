@@ -39,12 +39,12 @@ export default function FaceCam({ submit }: FaceCamProps) {
                         screenshotFormat="image/jpeg"
                         videoConstraints={VideoConstraints}
                     />
-                    <button className="bg-red-500 text-white border-none rounded-[25px] mt-[10px] px-[40px] py-[10px] cursor-pointer" onClick={capture}>Tomar Foto</button>
+                    <button className="bg-red-500 w-[480px] text-white border-none rounded-[25px] mt-[10px] px-[40px] py-[10px] cursor-pointer" onClick={capture}>Tomar Foto</button>
                 </>
             ) : (
                 <>
                     <img src={img} alt="screenshot" />
-                    <button type="button" className="bg-red-500 text-white border-none rounded-[25px] mt-[10px]  px-[40px] py-[10px] cursor-pointer" onClick={() => setImg(undefined)}>Retomar Foto</button>
+                    <button type="button" className="bg-red-500  w-[480px] text-white border-none rounded-[25px] mt-[10px]  px-[40px] py-[10px] cursor-pointer" onClick={() => setImg(undefined)}>Retomar Foto</button>
                 </>
             )}
         </div>

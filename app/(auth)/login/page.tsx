@@ -16,9 +16,9 @@ import LayoutWithSpinner from '@/components/LayoutWithSpinner';
 
 const loginSachema = object({
     email: string()
-        .min(1, "Email address is required")
-        .email("Email Address is invalid"),
-    password: string()
+        .min(1, "Corre Requerido")
+        .email("Correo Invalido"),
+    password: string().min(1, "Contraseña Requerida"),
 })
 export type LoginInput = TypeOf<typeof loginSachema>
 
