@@ -55,3 +55,19 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String?
+  photo_url String
+  uuid      String   @unique
+  Acesss    Access[]
+}
+
+model Access {
+  id         Int      @id @default(autoincrement())
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId Int
+  date       DateTime
+}

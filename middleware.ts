@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 
 export default withAuth(
   async function middleware(req) {
-    // console.log("middleware")
+    console.log("middleware")
     const pathname = req.nextUrl.pathname
     const token = await getToken({ req })
 
